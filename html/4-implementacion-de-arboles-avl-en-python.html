@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es" id="exe-page-mwcqulva-p9vyc8vhe">
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="eXeLearning v4.0.6">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="exe-pass-score" content="5">
+<link rel="license" type="text/html" href="https://creativecommons.org/licenses/by-sa/4.0/">
+<title>4. Implementación de árboles AVL en Python | 3. Estructura Árboles Balanceados</title>
+<link rel="icon" type="image/x-icon" href="../libs/favicon.ico">
+<script>document.querySelector("html").classList.add("js");</script><script src="../libs/jquery/jquery.min.js"> </script><script src="../libs/common_i18n.js"> </script><script src="../libs/common.js"> </script><script src="../libs/exe_export.js"> </script><script src="../libs/bootstrap/bootstrap.bundle.min.js"> </script><link rel="stylesheet" href="../libs/bootstrap/bootstrap.min.css">
+<script src="../idevices/text/text.js"></script><link rel="stylesheet" href="../idevices/text/text.css">
+<link rel="stylesheet" href="../content/css/base.css"><script src="../theme/style.js"> </script><link rel="stylesheet" href="../theme/style.css">
+</head>
+<body class="exe-export exe-web-site">
+<script>document.body.className+=" js"</script>
+<div class="exe-content exe-export pre-js siteNav-hidden"><a href="#page-mwcqulva-p9vyc8vhe" id="skipNav">Skip to content</a> <nav id="siteNav">
+<ul>
+<li> <a href="../index.html" class="main-node no-ch">Inicio</a>
+</li>
+<li> <a href="../html/1-fundamentos-de-los-arboles-balanceados.html" class="no-ch">1. Fundamentos de los árboles balanceados</a>
+</li>
+<li> <a href="../html/2-arboles-avl-y-sus-propiedades.html" class="no-ch">2. Árboles AVL y sus propiedades</a>
+</li>
+<li> <a href="../html/3-rotaciones-y-mecanismos-de-balanceo.html" class="no-ch">3. Rotaciones y mecanismos de balanceo</a>
+</li>
+<li class="active"> <a href="../html/4-implementacion-de-arboles-avl-en-python.html" class="active no-ch">4. Implementación de árboles AVL en Python</a>
+</li>
+<li> <a href="../html/5-aplicaciones-y-eficiencia-de-los-arboles-balance.html" class="no-ch">5. Aplicaciones y eficiencia de los árboles balanceados</a>
+</li>
+<li> <a href="../html/repaso-estructura-arboles-balanceados.html" class="no-ch">Repaso: Estructura Árboles Balanceados</a>
+</li>
+</ul>
+</nav><main id="page-mwcqulva-p9vyc8vhe" class="page"> 
+<header class="main-header">
+<div class="package-header"><p class="package-title">3. Estructura Árboles Balanceados</p></div>
+<div class="page-header"><h1 class="page-title">4. Implementación de árboles AVL en Python</h1></div>
+</header><div id="page-content-page-mwcqulva-p9vyc8vhe" class="page-content">
+<article id="block-mwcsf6ur-of8i8e8m4" class="box">
+<header class="box-head no-icon">
+<h1 class="box-title">Contenido</h1>
+<button class="box-toggle box-toggle-on" title="Toggle content">
+<span>Toggle content</span>
+</button></header>
+<div class="box-content">
+<div id="idevice-1794441976945-qhksgzjm5" class="idevice_node text" data-idevice-path="../idevices/text/" data-idevice-type="text" data-idevice-component-type="json" data-idevice-json-data="{&quot;ideviceId&quot;:&quot;idevice-1794441976945-qhksgzjm5&quot;}">
+<div class="exe-text-template">
+    <div style="font-family: Arial,Helvetica,sans-serif; color: #1f2937; line-height: 1.65; max-width: 1200px; margin: 0 auto;">
+<div style="background: #3B82F6; color: white; padding: 26px 30px; border-radius: 10px; margin-bottom: 24px;">
+<div style="display: inline-block; background: #FBBF24; color: #1f2937; padding: 5px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 12px;">Árboles balanceados · Estructura de Datos</div>
+<h2 style="margin: 0 0 10px; color: white; font-size: 29px; font-weight: 600;">Implementación de árboles AVL en Python</h2>
+<p style="margin: 0; color: white; font-size: 17px;">Construir un árbol AVL funcional mediante clases, inserción, rotaciones, búsqueda, eliminación y recorridos.</p>
+</div>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; border-left: 6px solid #10B981; padding: 20px 24px; border-radius: 8px; margin-bottom: 30px;">
+<h3 style="margin: 0 0 12px; color: #1f2937; font-size: 22px;">Introducción</h3>
+<p style="margin: 0 0 13px 0;">Los árboles AVL combinan la propiedad de ordenamiento de un árbol binario de búsqueda con reglas que limitan su altura. Para ello, calculan factores de equilibrio y, después de insertar o eliminar nodos, pueden aplicar rotaciones.</p>
+<p style="margin: 0 0 13px 0;">Desarrollaremos la implementación en <strong>Python 3</strong> de manera progresiva: primero los nodos y la clase administradora; después los métodos auxiliares, inserción, rotaciones, búsqueda, eliminación y representación en terminal. Al final se presenta <strong>un programa completo</strong> que integra todas las piezas.</p>
+</div>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin: 0 0 20px 0;">4.1 Creación de la clase Node</h3>
+<p style="margin: 0 0 13px 0;">Cada nodo almacena su valor, dos referencias a posibles hijos y su altura. En este material, un subárbol vacío tiene altura <code>−1</code> y una hoja tiene altura <code>0</code>.</p>
+<div style="overflow-x: auto; margin: 20px 0;">
+<table style="border-collapse: collapse; width: 100%; min-width: 560px;">
+<thead>
+<tr style="background: #3B82F6; color: white;">
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Atributo</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Función</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;"><code>value</code></td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Valor o clave almacenada</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;"><code>left</code></td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Referencia al hijo izquierdo</td>
+</tr>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;"><code>right</code></td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Referencia al hijo derecho</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;"><code>height</code></td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Altura del nodo, necesaria para calcular el equilibrio</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+        self.height = 0</code></pre>
+<p style="margin: 0 0 13px 0;">Al crear <code>Node(50)</code>, el nodo tiene altura cero y ambos hijos están vacíos (<code>None</code>).</p>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>node = Node(50)
+print(&quot;Valor:&quot;, node.value)
+print(&quot;Altura:&quot;, node.height)
+print(&quot;Hijo izquierdo:&quot;, node.left)
+print(&quot;Hijo derecho:&quot;, node.right)</code></pre>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="margin: 0 0 12px; color: #1d4ed8; font-size: 19px;">Salida esperada</h4>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>Valor: 50
+Altura: 0
+Hijo izquierdo: None
+Hijo derecho: None</code></pre>
+</div>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin: 0 0 20px 0;">4.2 Definición de la clase AVLTree</h3>
+<p style="margin: 0 0 13px 0;">La clase <code>AVLTree</code> administra la raíz y las operaciones sobre el árbol. El atributo <code>root</code> comienza con el valor <code>None</code>.</p>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>class AVLTree:
+    def __init__(self):
+        self.root = None</code></pre>
+<div style="overflow-x: auto; margin: 20px 0;">
+<table style="border-collapse: collapse; width: 100%; min-width: 560px;">
+<thead>
+<tr style="background: #3B82F6; color: white;">
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Método</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Propósito</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;"><code>insert()</code></td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Inserción con balanceo</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;"><code>search()</code></td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Comprobar si existe un valor</td>
+</tr>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;"><code>delete()</code></td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Eliminar un valor y reequilibrar</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;"><code>_height(), _update_height()</code></td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Consultar y actualizar alturas</td>
+</tr>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;"><code>_balance_factor()</code></td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Calcular diferencia de alturas</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;"><code>_rotate_left(), _rotate_right()</code></td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Reorganizar los nodos</td>
+</tr>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;"><code>_rebalance()</code></td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Seleccionar y aplicar rotaciones</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;"><code>inorder(), display()</code></td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Recorrer y visualizar la estructura</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="background: #ECFDF5; border-left: 5px solid #10B981; padding: 18px 22px; border-radius: 8px; margin: 20px 0;"><strong>Organización:</strong> los métodos que comienzan por guion bajo se utilizan como auxiliares internos de la clase. Los fragmentos de los apartados siguientes deben incorporarse dentro de <code>AVLTree</code>; al final se proporciona el programa consolidado.</div>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin: 0 0 20px 0;">4.3 Inserción de nodos y actualización de alturas</h3>
+<p style="margin: 0 0 13px 0;">La inserción respeta primero el orden de búsqueda: valores menores a la izquierda y valores mayores a la derecha. En esta implementación no se agregan valores duplicados.</p>
+<ol style="padding-left: 25px; margin: 12px 0 20px;">
+<li style="margin-bottom: 8px;">Comparar el valor con el nodo actual.</li>
+<li style="margin-bottom: 8px;">Descender recursivamente por la izquierda o la derecha.</li>
+<li style="margin-bottom: 8px;">Crear el nuevo nodo cuando se encuentra una posición vacía.</li>
+<li style="margin-bottom: 8px;">Actualizar alturas desde el punto de inserción hacia la raíz.</li>
+<li style="margin-bottom: 8px;">Corregir posibles desequilibrios con las rotaciones apropiadas.</li>
+</ol>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="margin: 0 0 12px; color: #1d4ed8; font-size: 19px;">Métodos auxiliares de altura y equilibrio</h4>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>def _height(self, node):
+    if node is None:
+        return -1
+    return node.height
+
+def _update_height(self, node):
+    node.height = 1 + max(
+        self._height(node.left),
+        self._height(node.right)
+    )
+
+def _balance_factor(self, node):
+    return self._height(node.left) - self._height(node.right)</code></pre>
+</div>
+<p style="margin: 0 0 13px 0;">La altura se actualiza mediante <code>h(n) = 1 + max(h(izquierdo), h(derecho))</code>. El factor de equilibrio se calcula como <code>FE = h(izquierdo) − h(derecho)</code>. Los valores permitidos son <code>−1, 0 y +1</code>.</p>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin: 0 0 20px 0;">4.4 Implementación de rotaciones en Python</h3>
+<p style="margin: 0 0 13px 0;">Las rotaciones cambian las referencias entre nodos sin perder el orden de búsqueda. Una rotación a la derecha reubica al hijo izquierdo; la rotación a la izquierda hace el movimiento opuesto.</p>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="margin: 0 0 12px; color: #1d4ed8; font-size: 19px;">Rotaciones simples</h4>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>def _rotate_right(self, y):
+    x = y.left
+    transfer = x.right
+    x.right = y
+    y.left = transfer
+    self._update_height(y)
+    self._update_height(x)
+    return x
+
+def _rotate_left(self, x):
+    y = x.right
+    transfer = y.left
+    y.left = x
+    x.right = transfer
+    self._update_height(x)
+    self._update_height(y)
+    return y</code></pre>
+</div>
+<p style="margin: 0 0 13px 0;">En ambas rotaciones se actualiza primero la altura del nodo que desciende y luego la del nodo que asciende.</p>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="margin: 0 0 12px; color: #1d4ed8; font-size: 19px;">Selección de los cuatro casos: LL, RR, LR y RL</h4>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>def _rebalance(self, node):
+    self._update_height(node)
+    balance = self._balance_factor(node)
+
+    if balance &gt; 1:
+        if self._balance_factor(node.left) &lt; 0:
+            node.left = self._rotate_left(node.left)
+        return self._rotate_right(node)
+
+    if balance &lt; -1:
+        if self._balance_factor(node.right) &gt; 0:
+            node.right = self._rotate_right(node.right)
+        return self._rotate_left(node)
+
+    return node</code></pre>
+</div>
+<div style="overflow-x: auto; margin: 20px 0;">
+<table style="border-collapse: collapse; width: 100%; min-width: 560px;">
+<thead>
+<tr style="background: #3B82F6; color: white;">
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Condición</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Acción</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">FE &gt; 1, hijo izquierdo con FE ≥ 0</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">LL: rotación a la derecha</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">FE &gt; 1, hijo izquierdo con FE &lt; 0</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">LR: izquierda en el hijo y derecha en el nodo</td>
+</tr>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">FE &lt; −1, hijo derecho con FE ≤ 0</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">RR: rotación a la izquierda</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">FE &lt; −1, hijo derecho con FE &gt; 0</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">RL: derecha en el hijo e izquierda en el nodo</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="margin: 0 0 12px; color: #1d4ed8; font-size: 19px;">Inserción recursiva con reequilibrado</h4>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>def insert(self, value):
+    self.root = self._insert(self.root, value)
+
+def _insert(self, node, value):
+    if node is None:
+        return Node(value)
+    if value &lt; node.value:
+        node.left = self._insert(node.left, value)
+    elif value &gt; node.value:
+        node.right = self._insert(node.right, value)
+    else:
+        return node  # Sin valores duplicados
+    return self._rebalance(node)</code></pre>
+</div>
+<div style="background: #ECFDF5; border-left: 5px solid #10B981; padding: 18px 22px; border-radius: 8px; margin: 20px 0;">La función <code>_insert()</code> devuelve siempre la raíz actualizada del subárbol. Esto es fundamental porque una rotación puede sustituir su raíz.</div>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin: 0 0 20px 0;">4.5 Búsqueda y eliminación de elementos</h3>
+<p style="margin: 0 0 13px 0;">La búsqueda aprovecha el orden de los nodos y no modifica el árbol. La eliminación conserva el orden y revisa el equilibrio durante el retorno de la recursión.</p>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="margin: 0 0 12px; color: #1d4ed8; font-size: 19px;">Búsqueda iterativa</h4>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>def search(self, value):
+    node = self.root
+    while node is not None:
+        if value == node.value:
+            return True
+        if value &lt; node.value:
+            node = node.left
+        else:
+            node = node.right
+    return False</code></pre>
+</div>
+<div style="overflow-x: auto; margin: 20px 0;">
+<table style="border-collapse: collapse; width: 100%; min-width: 560px;">
+<thead>
+<tr style="background: #3B82F6; color: white;">
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Tipo de nodo</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Procedimiento para eliminarlo</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Sin hijos</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Eliminar el nodo directamente</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Con un hijo</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Devolver su único hijo como sustituto</td>
+</tr>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Con dos hijos</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB; vertical-align: top;">Copiar el valor del sucesor en inorden y eliminar ese sucesor</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="margin: 0 0 12px; color: #1d4ed8; font-size: 19px;">Eliminación recursiva</h4>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>def delete(self, value):
+    self.root = self._delete(self.root, value)
+
+def _delete(self, node, value):
+    if node is None:
+        return None
+    if value &lt; node.value:
+        node.left = self._delete(node.left, value)
+    elif value &gt; node.value:
+        node.right = self._delete(node.right, value)
+    else:
+        if node.left is None:
+            return node.right
+        if node.right is None:
+            return node.left
+
+        successor = node.right
+        while successor.left is not None:
+            successor = successor.left
+        node.value = successor.value
+        node.right = self._delete(node.right, successor.value)
+
+    return self._rebalance(node)</code></pre>
+</div>
+<p style="margin: 0 0 13px 0;">Si el nodo tiene dos hijos, el sucesor en inorden es el menor valor del subárbol derecho. Una vez eliminado, <code>_rebalance()</code> actualiza y reequilibra los antepasados, si es necesario.</p>
+<div style="background: #ECFDF5; border-left: 5px solid #10B981; padding: 18px 22px; border-radius: 8px; margin: 20px 0;">La búsqueda, inserción y eliminación tienen complejidad temporal <strong>O(log n)</strong> en el peor caso para un árbol AVL.</div>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin: 0 0 20px 0;">4.6 Recorrido y visualización del árbol AVL</h3>
+<p style="margin: 0 0 13px 0;">El recorrido <strong>inorden</strong> visita el subárbol izquierdo, el nodo actual y el subárbol derecho. En un árbol binario de búsqueda con claves únicas, produce los valores en orden ascendente.</p>
+<p style="margin: 0 0 13px 0;">El método <code>display()</code> representa el árbol mediante sangrías. <code>I</code> indica hijo izquierdo; <code>D</code>, hijo derecho; <code>h</code>, altura; y <code>FE</code>, factor de equilibrio.</p>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>def inorder(self):
+    result = []
+
+    def visit(node):
+        if node is None:
+            return
+        visit(node.left)
+        result.append(node.value)
+        visit(node.right)
+
+    visit(self.root)
+    return result
+
+def display(self):
+    def visit(node, level=0, prefix=&quot;Raíz: &quot;):
+        if node is None:
+            return
+        print(
+            &quot;    &quot; * level + prefix + str(node.value)
+            + f&quot; (h={node.height}, FE={self._balance_factor(node)})&quot;
+        )
+        visit(node.left, level + 1, &quot;I: &quot;)
+        visit(node.right, level + 1, &quot;D: &quot;)
+
+    if self.root is None:
+        print(&quot;(árbol vacío)&quot;)
+    else:
+        visit(self.root)</code></pre>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin: 0 0 20px 0;">Ejemplo práctico integrado en Python</h3>
+<p style="margin: 0 0 13px 0;">Este programa integra todos los métodos anteriores. Es <strong>autónomo y ejecutable en Python 3</strong>, sin bibliotecas externas. Incluye inserción, búsqueda, eliminación y recorridos. Copia el bloque completo en un archivo <code>avl.py</code>.</p>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+        self.height = 0
+
+class AVLTree:
+    def __init__(self):
+        self.root = None
+    def _height(self, node):
+        if node is None:
+            return -1
+        return node.height
+
+    def _update_height(self, node):
+        node.height = 1 + max(
+            self._height(node.left),
+            self._height(node.right)
+        )
+
+    def _balance_factor(self, node):
+        return self._height(node.left) - self._height(node.right)
+    def _rotate_right(self, y):
+        x = y.left
+        transfer = x.right
+        x.right = y
+        y.left = transfer
+        self._update_height(y)
+        self._update_height(x)
+        return x
+
+    def _rotate_left(self, x):
+        y = x.right
+        transfer = y.left
+        y.left = x
+        x.right = transfer
+        self._update_height(x)
+        self._update_height(y)
+        return y
+    def _rebalance(self, node):
+        self._update_height(node)
+        balance = self._balance_factor(node)
+
+        if balance &gt; 1:
+            if self._balance_factor(node.left) &lt; 0:
+                node.left = self._rotate_left(node.left)
+            return self._rotate_right(node)
+
+        if balance &lt; -1:
+            if self._balance_factor(node.right) &gt; 0:
+                node.right = self._rotate_right(node.right)
+            return self._rotate_left(node)
+
+        return node
+    def insert(self, value):
+        self.root = self._insert(self.root, value)
+
+    def _insert(self, node, value):
+        if node is None:
+            return Node(value)
+        if value &lt; node.value:
+            node.left = self._insert(node.left, value)
+        elif value &gt; node.value:
+            node.right = self._insert(node.right, value)
+        else:
+            return node  # Sin valores duplicados
+        return self._rebalance(node)
+    def search(self, value):
+        node = self.root
+        while node is not None:
+            if value == node.value:
+                return True
+            if value &lt; node.value:
+                node = node.left
+            else:
+                node = node.right
+        return False
+    def delete(self, value):
+        self.root = self._delete(self.root, value)
+
+    def _delete(self, node, value):
+        if node is None:
+            return None
+        if value &lt; node.value:
+            node.left = self._delete(node.left, value)
+        elif value &gt; node.value:
+            node.right = self._delete(node.right, value)
+        else:
+            if node.left is None:
+                return node.right
+            if node.right is None:
+                return node.left
+
+            successor = node.right
+            while successor.left is not None:
+                successor = successor.left
+            node.value = successor.value
+            node.right = self._delete(node.right, successor.value)
+
+        return self._rebalance(node)
+    def inorder(self):
+        result = []
+
+        def visit(node):
+            if node is None:
+                return
+            visit(node.left)
+            result.append(node.value)
+            visit(node.right)
+
+        visit(self.root)
+        return result
+
+    def display(self):
+        def visit(node, level=0, prefix=&quot;Raíz: &quot;):
+            if node is None:
+                return
+            print(
+                &quot;    &quot; * level + prefix + str(node.value)
+                + f&quot; (h={node.height}, FE={self._balance_factor(node)})&quot;
+            )
+            visit(node.left, level + 1, &quot;I: &quot;)
+            visit(node.right, level + 1, &quot;D: &quot;)
+
+        if self.root is None:
+            print(&quot;(árbol vacío)&quot;)
+        else:
+            visit(self.root)
+
+tree = AVLTree()
+for value in [30, 20, 10, 40, 50, 25]:
+    tree.insert(value)
+
+print(&quot;Árbol después de insertar:&quot;)
+tree.display()
+print(&quot;Recorrido inorden:&quot;, tree.inorder())
+print(&quot;Buscar 25:&quot;, tree.search(25))
+print(&quot;Buscar 99:&quot;, tree.search(99))
+
+tree.delete(20)
+print(&quot;\nÁrbol después de eliminar 20:&quot;)
+tree.display()
+print(&quot;Recorrido final:&quot;, tree.inorder())</code></pre>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="margin: 0 0 12px; color: #1d4ed8; font-size: 19px;">Salida esperada</h4>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; white-space: pre; overflow-x: auto; padding: 22px; margin: 20px 0;"><code>Árbol después de insertar:
+Raíz: 30 (h=2, FE=0)
+    I: 20 (h=1, FE=0)
+        I: 10 (h=0, FE=0)
+        D: 25 (h=0, FE=0)
+    D: 40 (h=1, FE=-1)
+        D: 50 (h=0, FE=0)
+Recorrido inorden: [10, 20, 25, 30, 40, 50]
+Buscar 25: True
+Buscar 99: False
+
+Árbol después de eliminar 20:
+Raíz: 30 (h=2, FE=0)
+    I: 25 (h=1, FE=1)
+        I: 10 (h=0, FE=0)
+    D: 40 (h=1, FE=-1)
+        D: 50 (h=0, FE=0)
+Recorrido final: [10, 25, 30, 40, 50]</code></pre>
+</div>
+<div style="background: white; border: 1px solid #E5E7EB; border-radius: 9px; padding: 20px; margin: 20px 0;"><svg role="img" aria-label="Árbol AVL después de insertar 30, 20, 10, 40, 50 y 25." xmlns="http://www.w3.org/2000/svg" viewbox="0 0 640 230" style="width: 100%; max-width: 640px; height: auto; display: block; margin: auto;"><line x1="320" y1="33" x2="172" y2="112" stroke="#94A3B8" stroke-width="3"></line><line x1="320" y1="33" x2="467" y2="112" stroke="#94A3B8" stroke-width="3"></line><line x1="172" y1="112" x2="90" y2="188" stroke="#94A3B8" stroke-width="3"></line><line x1="172" y1="112" x2="251" y2="188" stroke="#94A3B8" stroke-width="3"></line><line x1="467" y1="112" x2="548" y2="188" stroke="#94A3B8" stroke-width="3"></line><circle cx="320" cy="33" r="24" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"></circle><text x="320" y="38" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#1E40AF">30</text><circle cx="172" cy="112" r="24" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"></circle><text x="172" y="117" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#1E40AF">20</text><circle cx="467" cy="112" r="24" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"></circle><text x="467" y="117" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#1E40AF">40</text><circle cx="90" cy="188" r="24" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"></circle><text x="90" y="193" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#1E40AF">10</text><circle cx="251" cy="188" r="24" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"></circle><text x="251" y="193" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#1E40AF">25</text><circle cx="548" cy="188" r="24" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"></circle><text x="548" y="193" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#1E40AF">50</text></svg>
+<p style="text-align: center; margin: 10px 0 0; color: #4b5563; font-size: 14px;">Árbol AVL después de insertar 30, 20, 10, 40, 50 y 25.</p>
+</div>
+<div style="background: white; border: 1px solid #E5E7EB; border-radius: 9px; padding: 20px; margin: 20px 0;"><svg role="img" aria-label="Árbol AVL después de eliminar 20; el sucesor 25 ocupa su lugar." xmlns="http://www.w3.org/2000/svg" viewbox="0 0 640 230" style="width: 100%; max-width: 640px; height: auto; display: block; margin: auto;"><line x1="320" y1="33" x2="172" y2="112" stroke="#94A3B8" stroke-width="3"></line><line x1="320" y1="33" x2="467" y2="112" stroke="#94A3B8" stroke-width="3"></line><line x1="172" y1="112" x2="90" y2="188" stroke="#94A3B8" stroke-width="3"></line><line x1="467" y1="112" x2="548" y2="188" stroke="#94A3B8" stroke-width="3"></line><circle cx="320" cy="33" r="24" fill="#D1FAE5" stroke="#059669" stroke-width="2"></circle><text x="320" y="38" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#065F46">30</text><circle cx="172" cy="112" r="24" fill="#D1FAE5" stroke="#059669" stroke-width="2"></circle><text x="172" y="117" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#065F46">25</text><circle cx="467" cy="112" r="24" fill="#D1FAE5" stroke="#059669" stroke-width="2"></circle><text x="467" y="117" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#065F46">40</text><circle cx="90" cy="188" r="24" fill="#D1FAE5" stroke="#059669" stroke-width="2"></circle><text x="90" y="193" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#065F46">10</text><circle cx="548" cy="188" r="24" fill="#D1FAE5" stroke="#059669" stroke-width="2"></circle><text x="548" y="193" text-anchor="middle" font-family="Arial" font-size="16" font-weight="700" fill="#065F46">50</text></svg>
+<p style="text-align: center; margin: 10px 0 0; color: #4b5563; font-size: 14px;">Árbol AVL después de eliminar 20; el sucesor 25 ocupa su lugar.</p>
+</div>
+<p style="margin: 0 0 13px 0;">La salida permite verificar que el recorrido inorden conserva el orden de los valores y que todos los factores de equilibrio quedan dentro del intervalo permitido.</p>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin: 0 0 20px 0;">Actividad práctica: gestión de códigos de productos</h3>
+<p style="margin: 0 0 13px 0;">Una aplicación de inventario necesita almacenar, consultar y eliminar códigos numéricos mediante un árbol AVL. Utiliza el programa completo como punto de partida.</p>
+<ol style="padding-left: 25px; margin: 12px 0 20px;">
+<li style="margin-bottom: 8px;">Crea un árbol AVL vacío.</li>
+<li style="margin-bottom: 8px;">Inserta los códigos <code>45, 25, 65, 15, 35, 55, 75</code>.</li>
+<li style="margin-bottom: 8px;">Visualiza el árbol y comprueba los factores de equilibrio.</li>
+<li style="margin-bottom: 8px;">Inserta <code>10, 5, 30</code> y observa si se producen rotaciones.</li>
+<li style="margin-bottom: 8px;">Busca los códigos <code>35</code>, <code>75</code> y <code>90</code>.</li>
+<li style="margin-bottom: 8px;">Elimina los códigos <code>25</code> y <code>65</code> en ese orden.</li>
+<li style="margin-bottom: 8px;">Ejecuta el recorrido inorden y comprueba el orden ascendente.</li>
+<li style="margin-bottom: 8px;">Explica cómo las rotaciones conservan el equilibrio de la estructura.</li>
+</ol>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="margin: 0 0 12px; color: #1d4ed8; font-size: 19px;">Criterios de verificación</h4>
+<ul style="padding-left: 25px; margin: 12px 0 20px;">
+<li style="margin-bottom: 8px;">El subárbol izquierdo contiene valores menores y el derecho, mayores.</li>
+<li style="margin-bottom: 8px;">Los valores duplicados no se almacenan.</li>
+<li style="margin-bottom: 8px;">Las alturas se actualizan tras las modificaciones.</li>
+<li style="margin-bottom: 8px;">Todos los nodos conservan factores de equilibrio entre −1 y +1.</li>
+<li style="margin-bottom: 8px;">Las búsquedas y eliminaciones son correctas.</li>
+<li style="margin-bottom: 8px;">El recorrido inorden contiene los valores esperados en orden ascendente.</li>
+</ul>
+</div>
+</section>
+<div style="background: #1F2937; color: #ffffff; padding: 26px 30px; border-radius: 10px; margin-top: 30px;">
+<h3 style="margin: 0 0 12px; color: #fbbf24; font-size: 22px;">Síntesis</h3>
+<p style="margin: 0 0 13px 0;">La clase <strong>Node</strong> representa cada elemento; la clase <strong>AVLTree</strong> administra la estructura y sus operaciones. Las alturas y los factores de equilibrio indican cuándo se requiere una rotación.</p>
+<p style="margin: 0 0 13px 0;">La inserción y la eliminación combinan búsqueda ordenada, recursividad y reequilibrado. Los recorridos y la visualización permiten comprobar la estructura después de cada operación.</p>
+<p style="margin: 0;">Los árboles AVL garantizan una altura O(log n), fundamento de la eficiencia de sus operaciones. El próximo subtema analizará sus aplicaciones y su rendimiento frente a otras estructuras.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</div></main><div class="nav-buttons">
+<a href="../html/3-rotaciones-y-mecanismos-de-balanceo.html" title="Anterior" class="nav-button nav-button-left"><span>Anterior</span></a>
+<a href="../html/5-aplicaciones-y-eficiencia-de-los-arboles-balance.html" title="Siguiente" class="nav-button nav-button-right"><span>Siguiente</span></a>
+</div>
+<footer id="siteFooter"><div id="siteFooterContent"> <div id="packageLicense" class="cc cc-by-sa"> <p> <span class="license-label">Licencia: </span><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="license">Creative Commons: Reconocimiento - compartir igual 4.0</a></p>
+</div>
+</div></footer>
+</div>
+<p id="made-with-eXe"> <a href="https://exelearning.net/" target="_blank" rel="noopener"> <span>Creado con eXeLearning <span>(Ventana nueva)</span></span></a></p>
+</body>
+</html>

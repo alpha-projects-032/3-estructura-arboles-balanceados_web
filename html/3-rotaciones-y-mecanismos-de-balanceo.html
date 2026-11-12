@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es" id="exe-page-mwcqudrx-8nk5n4bkj">
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="eXeLearning v4.0.6">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="exe-pass-score" content="5">
+<link rel="license" type="text/html" href="https://creativecommons.org/licenses/by-sa/4.0/">
+<title>3. Rotaciones y mecanismos de balanceo | 3. Estructura Árboles Balanceados</title>
+<link rel="icon" type="image/x-icon" href="../libs/favicon.ico">
+<script>document.querySelector("html").classList.add("js");</script><script src="../libs/jquery/jquery.min.js"> </script><script src="../libs/common_i18n.js"> </script><script src="../libs/common.js"> </script><script src="../libs/exe_export.js"> </script><script src="../libs/bootstrap/bootstrap.bundle.min.js"> </script><link rel="stylesheet" href="../libs/bootstrap/bootstrap.min.css">
+<script src="../idevices/text/text.js"></script><link rel="stylesheet" href="../idevices/text/text.css">
+<link rel="stylesheet" href="../content/css/base.css"><script src="../theme/style.js"> </script><link rel="stylesheet" href="../theme/style.css">
+</head>
+<body class="exe-export exe-web-site">
+<script>document.body.className+=" js"</script>
+<div class="exe-content exe-export pre-js siteNav-hidden"><a href="#page-mwcqudrx-8nk5n4bkj" id="skipNav">Skip to content</a> <nav id="siteNav">
+<ul>
+<li> <a href="../index.html" class="main-node no-ch">Inicio</a>
+</li>
+<li> <a href="../html/1-fundamentos-de-los-arboles-balanceados.html" class="no-ch">1. Fundamentos de los árboles balanceados</a>
+</li>
+<li> <a href="../html/2-arboles-avl-y-sus-propiedades.html" class="no-ch">2. Árboles AVL y sus propiedades</a>
+</li>
+<li class="active"> <a href="../html/3-rotaciones-y-mecanismos-de-balanceo.html" class="active no-ch">3. Rotaciones y mecanismos de balanceo</a>
+</li>
+<li> <a href="../html/4-implementacion-de-arboles-avl-en-python.html" class="no-ch">4. Implementación de árboles AVL en Python</a>
+</li>
+<li> <a href="../html/5-aplicaciones-y-eficiencia-de-los-arboles-balance.html" class="no-ch">5. Aplicaciones y eficiencia de los árboles balanceados</a>
+</li>
+<li> <a href="../html/repaso-estructura-arboles-balanceados.html" class="no-ch">Repaso: Estructura Árboles Balanceados</a>
+</li>
+</ul>
+</nav><main id="page-mwcqudrx-8nk5n4bkj" class="page"> 
+<header class="main-header">
+<div class="package-header"><p class="package-title">3. Estructura Árboles Balanceados</p></div>
+<div class="page-header"><h1 class="page-title">3. Rotaciones y mecanismos de balanceo</h1></div>
+</header><div id="page-content-page-mwcqudrx-8nk5n4bkj" class="page-content">
+<article id="block-mwcs4x6r-fpsmdyi6y" class="box">
+<header class="box-head no-icon">
+<h1 class="box-title">Contenido</h1>
+<button class="box-toggle box-toggle-on" title="Toggle content">
+<span>Toggle content</span>
+</button></header>
+<div class="box-content">
+<div id="idevice-1794441497856-hvt230axd" class="idevice_node text" data-idevice-path="../idevices/text/" data-idevice-type="text" data-idevice-component-type="json" data-idevice-json-data="{&quot;ideviceId&quot;:&quot;idevice-1794441497856-hvt230axd&quot;}">
+<div class="exe-text-template">
+    <div style="font-family: Arial,Helvetica,sans-serif; color: #1f2937; line-height: 1.65; max-width: 1200px; margin: 0 auto;">
+<div style="background: #3B82F6; color: #ffffff; padding: 26px 30px; border-radius: 10px; margin-bottom: 24px;">
+<div style="display: inline-block; background: #FBBF24; color: #1f2937; padding: 5px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 12px;">Árboles balanceados · Estructura de Datos</div>
+<h2 style="margin: 0 0 10px; color: #ffffff; font-size: 29px; font-weight: 600;">Rotaciones y mecanismos de balanceo</h2>
+<p style="margin: 0; color: #ffffff; font-size: 17px;">Identificar los cuatro casos de desbalanceo en árboles AVL y comprender cómo las rotaciones restauran su equilibrio sin modificar el orden de búsqueda.</p>
+</div>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; border-left: 6px solid #10B981; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="color: #1f2937; margin: 0 0 12px; font-size: 19px;">Introducción</h4>
+<p style="margin: 0 0 14px;">Cuando se inserta o elimina un elemento en un árbol AVL, puede cambiar la altura de uno o varios subárboles. Si un nodo presenta un factor de equilibrio fuera del intervalo permitido, se requiere reorganizar sus enlaces.</p>
+<p style="margin: 0 0 14px;">Las <strong>rotaciones</strong> son operaciones locales que preservan el orden de las claves y permiten recuperar el equilibrio. Estudiaremos las configuraciones <strong>LL, RR, LR y RL</strong>, antes de integrarlas en una implementación completa en Python.</p>
+</div>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">3.1 Concepto y propósito de las rotaciones</h3>
+<p style="margin: 0 0 14px;">Una <strong>rotación</strong> reorganiza las referencias entre nodos de un árbol binario de búsqueda, manteniendo sus valores y el recorrido inorden. En árboles AVL se aplica para corregir un desbalanceo tras una actualización.</p>
+<ul style="margin: 12px 0 18px; padding-left: 25px;">
+<li style="margin-bottom: 8px;">Conservan el orden de las claves: izquierda &lt; nodo &lt; derecha.</li>
+<li style="margin-bottom: 8px;">Pueden ser <strong>simples</strong> (un movimiento) o <strong>dobles</strong> (dos movimientos).</li>
+<li style="margin-bottom: 8px;">No requieren reconstruir todo el árbol.</li>
+<li style="margin-bottom: 8px;">Con referencias directas y alturas almacenadas, cada rotación se ejecuta en <strong>O(1)</strong>.</li>
+</ul>
+<div style="background: #FFFBEB; border: 1px solid #E5E7EB; border-left: 6px solid #FBBF24; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="color: #1f2937; margin: 0 0 12px; font-size: 19px;">Condición de equilibrio AVL</h4>
+<p style="font-size: 18px; margin: 0;"><strong>FE(n) = altura(izquierdo) − altura(derecho)</strong></p>
+<p style="margin: 8px 0 0;">Se admiten factores <code>−1</code>, <code>0</code> y <code>+1</code>. En una inserción a partir de un árbol AVL válido, el primer nodo desbalanceado suele presentar <code>+2</code> o <code>−2</code>.</p>
+</div>
+<div style="overflow-x: auto; margin: 20px 0;">
+<table style="width: 100%; border-collapse: collapse; min-width: 580px;">
+<thead>
+<tr style="background: #3B82F6; color: white;">
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Caso</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Dirección del crecimiento</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Corrección</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background: #FFFFFF;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;"><strong>LL</strong></td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">Izquierda → izquierda</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">Rotación simple a la derecha</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;"><strong>RR</strong></td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">Derecha → derecha</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">Rotación simple a la izquierda</td>
+</tr>
+<tr style="background: #FFFFFF;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;"><strong>LR</strong></td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">Izquierda → derecha</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">Rotación izquierda sobre el hijo y después derecha sobre el nodo</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;"><strong>RL</strong></td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">Derecha → izquierda</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">Rotación derecha sobre el hijo y después izquierda sobre el nodo</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">3.2 Rotación simple a la derecha (LL)</h3>
+<p style="margin: 0 0 14px;">El caso <strong>izquierda–izquierda (LL)</strong> aparece cuando crece el subárbol izquierdo del hijo izquierdo de un nodo. Por ejemplo, al insertar <code>30, 20, 10</code>.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit,minmax(255px,1fr)); gap: 16px; margin: 16px 0;">
+<div><strong>Antes: FE(30) = +2</strong>
+<div style="border: 1px solid #E5E7EB; background: #FFFFFF; padding: 16px; border-radius: 9px; margin: 16px 0; text-align: center;"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 460 235" role="img" aria-label="Cadena hacia la izquierda." style="width: 100%; max-width: 460px; height: auto; display: block; margin: auto;"><line x1="310" y1="35" x2="220" y2="115" stroke="#94A3B8" stroke-width="3"></line><line x1="220" y1="115" x2="130" y2="195" stroke="#94A3B8" stroke-width="3"></line><circle cx="310" cy="35" r="22" fill="#FEE2E2" stroke="#DC2626" stroke-width="2.5"></circle><text x="310" y="40" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">30</text><circle cx="220" cy="115" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="220" y="120" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">20</text><circle cx="130" cy="195" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="130" y="200" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">10</text></svg>
+<p style="margin: 10px 0 0; color: #4b5563; font-size: 14px;">Cadena hacia la izquierda.</p>
+</div>
+</div>
+<div><strong>Después: equilibrio restaurado</strong>
+<div style="border: 1px solid #E5E7EB; background: #FFFFFF; padding: 16px; border-radius: 9px; margin: 16px 0; text-align: center;"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 460 160" role="img" aria-label="La raíz local pasa a ser 20." style="width: 100%; max-width: 460px; height: auto; display: block; margin: auto;"><line x1="230" y1="35" x2="125" y2="120" stroke="#94A3B8" stroke-width="3"></line><line x1="230" y1="35" x2="335" y2="120" stroke="#94A3B8" stroke-width="3"></line><circle cx="230" cy="35" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="230" y="40" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">20</text><circle cx="125" cy="120" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="125" y="125" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">10</text><circle cx="335" cy="120" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="335" y="125" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">30</text></svg>
+<p style="margin: 10px 0 0; color: #4b5563; font-size: 14px;">La raíz local pasa a ser 20.</p>
+</div>
+</div>
+</div>
+<ol style="margin: 12px 0 18px; padding-left: 25px;">
+<li style="margin-bottom: 8px;">Identificar el nodo desbalanceado <code>30</code>.</li>
+<li style="margin-bottom: 8px;">Promover su hijo izquierdo <code>20</code>.</li>
+<li style="margin-bottom: 8px;">Convertir el nodo <code>30</code> en hijo derecho de <code>20</code>.</li>
+<li style="margin-bottom: 8px;">Transferir el subárbol derecho previo de <code>20</code>, si existe, al hijo izquierdo de <code>30</code>.</li>
+<li style="margin-bottom: 8px;">Actualizar alturas y reconectar la nueva raíz local.</li>
+</ol>
+<div style="background: #ECFDF5; border: 1px solid #E5E7EB; border-left: 6px solid #10B981; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="color: #1f2937; margin: 0 0 12px; font-size: 19px;">Resultado</h4>
+<p style="margin: 0 0 14px;">La rotación a la <strong>derecha</strong> conserva el orden <code>10 &lt; 20 &lt; 30</code> y deja el subárbol equilibrado.</p>
+</div>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">3.3 Rotación simple a la izquierda (RR)</h3>
+<p style="margin: 0 0 14px;">El caso <strong>derecha–derecha (RR)</strong> aparece cuando crece el subárbol derecho del hijo derecho. La secuencia <code>10, 20, 30</code> provoca este patrón.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit,minmax(255px,1fr)); gap: 16px; margin: 16px 0;">
+<div><strong>Antes: FE(10) = −2</strong>
+<div style="border: 1px solid #E5E7EB; background: #FFFFFF; padding: 16px; border-radius: 9px; margin: 16px 0; text-align: center;"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 460 235" role="img" aria-label="Cadena hacia la derecha." style="width: 100%; max-width: 460px; height: auto; display: block; margin: auto;"><line x1="130" y1="35" x2="220" y2="115" stroke="#94A3B8" stroke-width="3"></line><line x1="220" y1="115" x2="310" y2="195" stroke="#94A3B8" stroke-width="3"></line><circle cx="130" cy="35" r="22" fill="#FEE2E2" stroke="#DC2626" stroke-width="2.5"></circle><text x="130" y="40" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">10</text><circle cx="220" cy="115" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="220" y="120" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">20</text><circle cx="310" cy="195" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="310" y="200" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">30</text></svg>
+<p style="margin: 10px 0 0; color: #4b5563; font-size: 14px;">Cadena hacia la derecha.</p>
+</div>
+</div>
+<div><strong>Después: equilibrio restaurado</strong>
+<div style="border: 1px solid #E5E7EB; background: #FFFFFF; padding: 16px; border-radius: 9px; margin: 16px 0; text-align: center;"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 460 160" role="img" aria-label="El nodo 20 asciende." style="width: 100%; max-width: 460px; height: auto; display: block; margin: auto;"><line x1="230" y1="35" x2="125" y2="120" stroke="#94A3B8" stroke-width="3"></line><line x1="230" y1="35" x2="335" y2="120" stroke="#94A3B8" stroke-width="3"></line><circle cx="230" cy="35" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="230" y="40" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">20</text><circle cx="125" cy="120" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="125" y="125" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">10</text><circle cx="335" cy="120" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="335" y="125" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">30</text></svg>
+<p style="margin: 10px 0 0; color: #4b5563; font-size: 14px;">El nodo 20 asciende.</p>
+</div>
+</div>
+</div>
+<ol style="margin: 12px 0 18px; padding-left: 25px;">
+<li style="margin-bottom: 8px;">Identificar el nodo desbalanceado <code>10</code>.</li>
+<li style="margin-bottom: 8px;">Promover el hijo derecho <code>20</code>.</li>
+<li style="margin-bottom: 8px;">Convertir <code>10</code> en hijo izquierdo de <code>20</code>.</li>
+<li style="margin-bottom: 8px;">Transferir el subárbol izquierdo previo de <code>20</code>, si existe, al hijo derecho de <code>10</code>.</li>
+<li style="margin-bottom: 8px;">Actualizar alturas y referencias.</li>
+</ol>
+<div style="background: #ECFDF5; border: 1px solid #E5E7EB; border-left: 6px solid #10B981; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="color: #1f2937; margin: 0 0 12px; font-size: 19px;">Resultado</h4>
+<p style="margin: 0 0 14px;">La rotación a la <strong>izquierda</strong> conserva el orden <code>10 &lt; 20 &lt; 30</code> y reduce la altura de la configuración desbalanceada.</p>
+</div>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">3.4 Rotación doble izquierda-derecha (LR)</h3>
+<p style="margin: 0 0 14px;">El caso <strong>izquierda–derecha (LR)</strong> se produce cuando el árbol se desbalancea hacia la izquierda, pero la inserción ocurre en el subárbol derecho de ese hijo. Ejemplo: <code>30, 10, 20</code>.</p>
+<div style="border: 1px solid #E5E7EB; background: #FFFFFF; padding: 16px; border-radius: 9px; margin: 16px 0; text-align: center;"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 460 235" role="img" aria-label="Configuración LR inicial: FE(30) = +2." style="width: 100%; max-width: 460px; height: auto; display: block; margin: auto;"><line x1="310" y1="35" x2="130" y2="115" stroke="#94A3B8" stroke-width="3"></line><line x1="130" y1="115" x2="220" y2="195" stroke="#94A3B8" stroke-width="3"></line><circle cx="310" cy="35" r="22" fill="#FEE2E2" stroke="#DC2626" stroke-width="2.5"></circle><text x="310" y="40" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">30</text><circle cx="130" cy="115" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="130" y="120" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">10</text><circle cx="220" cy="195" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="220" y="200" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">20</text></svg>
+<p style="margin: 10px 0 0; color: #4b5563; font-size: 14px;">Configuración LR inicial: FE(30) = +2.</p>
+</div>
+<div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 16px 20px; margin: 20px 0;"><strong style="color: #1d4ed8;">Paso 1: rotación izquierda sobre el hijo 10</strong>
+<div style="border: 1px solid #E5E7EB; background: #FFFFFF; padding: 16px; border-radius: 9px; margin: 16px 0; text-align: center;"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 460 235" role="img" aria-label="El patrón LR se transforma en un patrón LL." style="width: 100%; max-width: 460px; height: auto; display: block; margin: auto;"><line x1="310" y1="35" x2="220" y2="115" stroke="#94A3B8" stroke-width="3"></line><line x1="220" y1="115" x2="130" y2="195" stroke="#94A3B8" stroke-width="3"></line><circle cx="310" cy="35" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="310" y="40" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">30</text><circle cx="220" cy="115" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="220" y="120" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">20</text><circle cx="130" cy="195" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="130" y="200" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">10</text></svg>
+<p style="margin: 10px 0 0; color: #4b5563; font-size: 14px;">El patrón LR se transforma en un patrón LL.</p>
+</div>
+</div>
+<div style="background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 8px; padding: 16px 20px; margin: 20px 0;"><strong style="color: #047857;">Paso 2: rotación derecha sobre el nodo 30</strong>
+<div style="border: 1px solid #E5E7EB; background: #FFFFFF; padding: 16px; border-radius: 9px; margin: 16px 0; text-align: center;"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 460 160" role="img" aria-label="El resultado está balanceado." style="width: 100%; max-width: 460px; height: auto; display: block; margin: auto;"><line x1="230" y1="35" x2="125" y2="120" stroke="#94A3B8" stroke-width="3"></line><line x1="230" y1="35" x2="335" y2="120" stroke="#94A3B8" stroke-width="3"></line><circle cx="230" cy="35" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="230" y="40" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">20</text><circle cx="125" cy="120" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="125" y="125" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">10</text><circle cx="335" cy="120" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="335" y="125" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">30</text></svg>
+<p style="margin: 10px 0 0; color: #4b5563; font-size: 14px;">El resultado está balanceado.</p>
+</div>
+</div>
+<p style="margin: 0 0 14px;">En consecuencia, la secuencia correcta es <strong>izquierda sobre el hijo izquierdo y después derecha sobre el nodo desbalanceado</strong>.</p>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">3.5 Rotación doble derecha-izquierda (RL)</h3>
+<p style="margin: 0 0 14px;">El caso <strong>derecha–izquierda (RL)</strong> surge cuando el árbol se desbalancea hacia la derecha, pero la inserción sucede en el subárbol izquierdo de ese hijo. Ejemplo: <code>10, 30, 20</code>.</p>
+<div style="border: 1px solid #E5E7EB; background: #FFFFFF; padding: 16px; border-radius: 9px; margin: 16px 0; text-align: center;"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 460 235" role="img" aria-label="Configuración RL inicial: FE(10) = −2." style="width: 100%; max-width: 460px; height: auto; display: block; margin: auto;"><line x1="130" y1="35" x2="310" y2="115" stroke="#94A3B8" stroke-width="3"></line><line x1="310" y1="115" x2="220" y2="195" stroke="#94A3B8" stroke-width="3"></line><circle cx="130" cy="35" r="22" fill="#FEE2E2" stroke="#DC2626" stroke-width="2.5"></circle><text x="130" y="40" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">10</text><circle cx="310" cy="115" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="310" y="120" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">30</text><circle cx="220" cy="195" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="220" y="200" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">20</text></svg>
+<p style="margin: 10px 0 0; color: #4b5563; font-size: 14px;">Configuración RL inicial: FE(10) = −2.</p>
+</div>
+<div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 16px 20px; margin: 20px 0;"><strong style="color: #1d4ed8;">Paso 1: rotación derecha sobre el hijo 30</strong>
+<div style="border: 1px solid #E5E7EB; background: #FFFFFF; padding: 16px; border-radius: 9px; margin: 16px 0; text-align: center;"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 460 235" role="img" aria-label="El patrón RL se transforma en un patrón RR." style="width: 100%; max-width: 460px; height: auto; display: block; margin: auto;"><line x1="130" y1="35" x2="220" y2="115" stroke="#94A3B8" stroke-width="3"></line><line x1="220" y1="115" x2="310" y2="195" stroke="#94A3B8" stroke-width="3"></line><circle cx="130" cy="35" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="130" y="40" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">10</text><circle cx="220" cy="115" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="220" y="120" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">20</text><circle cx="310" cy="195" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="310" y="200" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">30</text></svg>
+<p style="margin: 10px 0 0; color: #4b5563; font-size: 14px;">El patrón RL se transforma en un patrón RR.</p>
+</div>
+</div>
+<div style="background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 8px; padding: 16px 20px; margin: 20px 0;"><strong style="color: #047857;">Paso 2: rotación izquierda sobre el nodo 10</strong>
+<div style="border: 1px solid #E5E7EB; background: #FFFFFF; padding: 16px; border-radius: 9px; margin: 16px 0; text-align: center;"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 460 160" role="img" aria-label="El resultado está balanceado." style="width: 100%; max-width: 460px; height: auto; display: block; margin: auto;"><line x1="230" y1="35" x2="125" y2="120" stroke="#94A3B8" stroke-width="3"></line><line x1="230" y1="35" x2="335" y2="120" stroke="#94A3B8" stroke-width="3"></line><circle cx="230" cy="35" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="230" y="40" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">20</text><circle cx="125" cy="120" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="125" y="125" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">10</text><circle cx="335" cy="120" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2.5"></circle><text x="335" y="125" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1F2937" text-anchor="middle">30</text></svg>
+<p style="margin: 10px 0 0; color: #4b5563; font-size: 14px;">El resultado está balanceado.</p>
+</div>
+</div>
+<p style="margin: 0 0 14px;">En consecuencia, la secuencia correcta es <strong>derecha sobre el hijo derecho y después izquierda sobre el nodo desbalanceado</strong>.</p>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">3.6 Ejemplos prácticos de balanceo de árboles</h3>
+<p style="margin: 0 0 14px;">El tipo de rotación se identifica mediante el nodo desbalanceado y la dirección del crecimiento. Los siguientes son ejemplos de <strong>inserción</strong> con claves distintas.</p>
+<div style="overflow-x: auto; margin: 20px 0;">
+<table style="width: 100%; border-collapse: collapse; min-width: 580px;">
+<thead>
+<tr style="background: #3B82F6; color: white;">
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Caso</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Inserción de ejemplo</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Nodo desbalanceado</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Rotación</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background: #FFFFFF;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">LL</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">30, 20, 10</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">30</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">Derecha</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">RR</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">10, 20, 30</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">10</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">Izquierda</td>
+</tr>
+<tr style="background: #FFFFFF;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">LR</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">30, 10, 20</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">30</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">Izquierda y derecha</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">RL</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">10, 30, 20</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">10</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">Derecha e izquierda</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="overflow-x: auto; margin: 20px 0;">
+<table style="width: 100%; border-collapse: collapse; min-width: 580px;">
+<thead>
+<tr style="background: #3B82F6; color: white;">
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">FE del nodo</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">FE del hijo relevante</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Rotación en estos casos de inserción</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background: #FFFFFF;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">+2</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">+1</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">LL</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">−2</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">−1</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">RR</td>
+</tr>
+<tr style="background: #FFFFFF;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">+2</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">−1</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">LR</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">−2</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">+1</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">RL</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="background: #FFFBEB; border: 1px solid #E5E7EB; border-left: 6px solid #FBBF24; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="color: #1f2937; margin: 0 0 12px; font-size: 19px;">Nota sobre la eliminación</h4>
+<p style="margin: 0 0 14px;">Al eliminar nodos pueden presentarse configuraciones con factor de equilibrio <code>0</code> en el hijo correspondiente y puede ser necesario continuar reequilibrando antepasados. Estos casos se incorporarán en la implementación completa.</p>
+</div>
+<h4 style="font-size: 20px; color: #1f2937; margin: 24px 0 12px;">Ejemplo introductorio en Python: rotación simple derecha</h4>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; margin: 20px 0; overflow: auto; padding: 22px; white-space: pre;"><code>class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+        self.height = 0
+
+
+def height(node):
+    if node is None:
+        return -1
+    return node.height
+
+
+def update_height(node):
+    node.height = 1 + max(
+        height(node.left),
+        height(node.right)
+    )
+
+
+def rotate_right(node):
+    new_root = node.left
+    transferred = new_root.right
+
+    new_root.right = node
+    node.left = transferred
+
+    update_height(node)
+    update_height(new_root)
+    return new_root
+
+
+root = Node(30)
+root.left = Node(20)
+root.left.left = Node(10)
+
+update_height(root.left)
+update_height(root)
+
+root = rotate_right(root)
+
+print(&quot;Raíz:&quot;, root.value)
+print(&quot;Hijo izquierdo:&quot;, root.left.value)
+print(&quot;Hijo derecho:&quot;, root.right.value)</code></pre>
+<h4 style="margin: 14px 0 8px; color: #047857;">Resultado esperado</h4>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.55; margin: 20px 0; overflow: auto; padding: 22px; white-space: pre;"><code>Raíz: 20
+Hijo izquierdo: 10
+Hijo derecho: 30</code></pre>
+<p style="margin: 0 0 14px;">La función <code>rotate_right()</code> promueve al hijo izquierdo, conserva temporalmente el subárbol que debe transferirse, actualiza referencias y recalcula alturas. Este código ilustra una <strong>rotación aislada</strong>; aún no detecta automáticamente los desbalanceos.</p>
+</section>
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">Actividad de análisis</h3>
+<p style="margin: 0 0 14px;">Una aplicación almacena identificadores en árboles AVL. Para cada una de las siguientes secuencias, dibuja el árbol inicialmente obtenido sin rotaciones:</p>
+<div style="overflow-x: auto; margin: 20px 0;">
+<table style="width: 100%; border-collapse: collapse; min-width: 580px;">
+<thead>
+<tr style="background: #3B82F6; color: white;">
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Caso</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Secuencia</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background: #FFFFFF;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">A</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">50, 40, 30</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">B</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">20, 30, 40</td>
+</tr>
+<tr style="background: #FFFFFF;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">C</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">60, 30, 50</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">D</td>
+<td style="padding: 11px 12px; border: 1px solid #D1D5DB;">15, 45, 30</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol style="margin: 12px 0 18px; padding-left: 25px;">
+<li style="margin-bottom: 8px;">Representa cada árbol antes del balanceo.</li>
+<li style="margin-bottom: 8px;">Calcula el factor de equilibrio de cada nodo.</li>
+<li style="margin-bottom: 8px;">Identifica el nodo desbalanceado.</li>
+<li style="margin-bottom: 8px;">Determina si corresponde LL, RR, LR o RL.</li>
+<li style="margin-bottom: 8px;">Dibuja el árbol después de la rotación o rotaciones.</li>
+<li style="margin-bottom: 8px;">Comprueba que cada factor final está entre −1 y +1.</li>
+</ol>
+<div style="background: #ECFDF5; border: 1px solid #E5E7EB; border-left: 6px solid #10B981; padding: 20px 24px; border-radius: 9px; margin: 20px 0;">
+<h4 style="color: #1f2937; margin: 0 0 12px; font-size: 19px;">Propósito de la actividad</h4>
+<p style="margin: 0 0 14px;">Reconocer patrones de desbalanceo, elegir rotaciones correctas y verificar la conservación del orden de búsqueda.</p>
+</div>
+</section>
+<div style="background: #1F2937; color: #ffffff; padding: 26px 30px; border-radius: 10px; margin-top: 30px;">
+<h3 style="margin: 0 0 12px; color: #fbbf24; font-size: 22px;">Síntesis</h3>
+<p style="margin: 0 0 10px;">Las rotaciones AVL restauran el equilibrio mediante la reorganización local de referencias entre nodos, sin alterar el orden de búsqueda.</p>
+<p style="margin: 0 0 10px;"><strong>LL</strong> se corrige con rotación derecha y <strong>RR</strong> con rotación izquierda. Los casos <strong>LR</strong> y <strong>RL</strong> requieren dos rotaciones consecutivas.</p>
+<p style="margin: 0;">En el siguiente subtema se integrarán estas operaciones en una clase AVL completa en Python, incluyendo inserción, búsqueda y eliminación.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</div></main><div class="nav-buttons">
+<a href="../html/2-arboles-avl-y-sus-propiedades.html" title="Anterior" class="nav-button nav-button-left"><span>Anterior</span></a>
+<a href="../html/4-implementacion-de-arboles-avl-en-python.html" title="Siguiente" class="nav-button nav-button-right"><span>Siguiente</span></a>
+</div>
+<footer id="siteFooter"><div id="siteFooterContent"> <div id="packageLicense" class="cc cc-by-sa"> <p> <span class="license-label">Licencia: </span><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="license">Creative Commons: Reconocimiento - compartir igual 4.0</a></p>
+</div>
+</div></footer>
+</div>
+<p id="made-with-eXe"> <a href="https://exelearning.net/" target="_blank" rel="noopener"> <span>Creado con eXeLearning <span>(Ventana nueva)</span></span></a></p>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es" id="exe-page-mwcqv3l7-qvtgpkg3q">
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="eXeLearning v4.0.6">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="exe-pass-score" content="5">
+<link rel="license" type="text/html" href="https://creativecommons.org/licenses/by-sa/4.0/">
+<title>Repaso: Estructura Árboles Balanceados | 3. Estructura Árboles Balanceados</title>
+<link rel="icon" type="image/x-icon" href="../libs/favicon.ico">
+<script>document.querySelector("html").classList.add("js");</script><script src="../libs/jquery/jquery.min.js"> </script><script src="../libs/common_i18n.js"> </script><script src="../libs/common.js"> </script><script src="../libs/exe_export.js"> </script><script src="../libs/bootstrap/bootstrap.bundle.min.js"> </script><link rel="stylesheet" href="../libs/bootstrap/bootstrap.min.css">
+<script src="../idevices/text/text.js"></script><link rel="stylesheet" href="../idevices/text/text.css">
+<link rel="stylesheet" href="../content/css/base.css"><script src="../theme/style.js"> </script><link rel="stylesheet" href="../theme/style.css">
+</head>
+<body class="exe-export exe-web-site">
+<script>document.body.className+=" js"</script>
+<div class="exe-content exe-export pre-js siteNav-hidden"><a href="#page-mwcqv3l7-qvtgpkg3q" id="skipNav">Skip to content</a> <nav id="siteNav">
+<ul>
+<li> <a href="../index.html" class="main-node no-ch">Inicio</a>
+</li>
+<li> <a href="../html/1-fundamentos-de-los-arboles-balanceados.html" class="no-ch">1. Fundamentos de los árboles balanceados</a>
+</li>
+<li> <a href="../html/2-arboles-avl-y-sus-propiedades.html" class="no-ch">2. Árboles AVL y sus propiedades</a>
+</li>
+<li> <a href="../html/3-rotaciones-y-mecanismos-de-balanceo.html" class="no-ch">3. Rotaciones y mecanismos de balanceo</a>
+</li>
+<li> <a href="../html/4-implementacion-de-arboles-avl-en-python.html" class="no-ch">4. Implementación de árboles AVL en Python</a>
+</li>
+<li> <a href="../html/5-aplicaciones-y-eficiencia-de-los-arboles-balance.html" class="no-ch">5. Aplicaciones y eficiencia de los árboles balanceados</a>
+</li>
+<li class="active"> <a href="../html/repaso-estructura-arboles-balanceados.html" class="active no-ch">Repaso: Estructura Árboles Balanceados</a>
+</li>
+</ul>
+</nav><main id="page-mwcqv3l7-qvtgpkg3q" class="page"> 
+<header class="main-header">
+<div class="package-header"><p class="package-title">3. Estructura Árboles Balanceados</p></div>
+<div class="page-header"><h1 class="page-title">Repaso: Estructura Árboles Balanceados</h1></div>
+</header><div id="page-content-page-mwcqv3l7-qvtgpkg3q" class="page-content">
+<article id="block-mwct4tkc-xihqot13v" class="box">
+<header class="box-head no-icon">
+<h1 class="box-title">Repaso</h1>
+<button class="box-toggle box-toggle-on" title="Toggle content">
+<span>Toggle content</span>
+</button></header>
+<div class="box-content">
+<div id="idevice-1794443172778-0h9l0aelr" class="idevice_node text" data-idevice-path="../idevices/text/" data-idevice-type="text" data-idevice-component-type="json" data-idevice-json-data="{&quot;ideviceId&quot;:&quot;idevice-1794443172778-0h9l0aelr&quot;}">
+<div class="exe-text-template">
+    <div id="avl-match-game" style="font-family: Arial,Helvetica,sans-serif; color: #1f2937; line-height: 1.65; max-width: 1200px; margin: 0 auto;">
+<div style="background: #3B82F6; color: #ffffff; padding: 26px 30px; border-radius: 10px; margin-bottom: 24px;">
+<div style="display: inline-block; background: #FBBF24; color: #1f2937; padding: 5px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 12px;">Actividad interactiva · Árboles Balanceados</div>
+<h2 style="margin: 0 0 10px; color: #ffffff; font-size: 29px; font-weight: 600;">Relaciona conceptos y definiciones</h2>
+<p style="margin: 0; color: #ffffff; font-size: 17px;">Demuestra tus conocimientos sobre árboles AVL, factores de equilibrio, rotaciones, Python y complejidad computacional.</p>
+</div>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; border-left: 6px solid #10B981; padding: 20px 24px; border-radius: 8px; margin-bottom: 22px;">
+<h3 style="color: #1f2937; margin: 0 0 10px; font-size: 22px;">Instrucciones</h3>
+<p style="margin: 0;">En cada fila, selecciona la <strong>definición que corresponde al concepto</strong>. Las opciones aparecen en orden aleatorio. Al terminar, presiona <strong>Comprobar respuestas</strong>. Cada relación correcta vale <strong>1 punto</strong>; la nota máxima es <strong>10/10</strong>. Puedes volver a intentarlo tantas veces como quieras.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 18px;" aria-label="Estado de la actividad">
+<div style="flex: 1 1 155px; background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 9px; padding: 12px 16px;">
+<div style="font-size: 13px; color: #1d4ed8; font-weight: bold;">Puntuación</div>
+<div id="avl-score" style="font-size: 27px; font-weight: bold; color: #1d4ed8;" aria-live="polite">— / 10</div>
+</div>
+<div style="flex: 1 1 155px; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 9px; padding: 12px 16px;">
+<div style="font-size: 13px; color: #047857; font-weight: bold;">Intentos realizados</div>
+<div id="avl-attempts" style="font-size: 27px; font-weight: bold; color: #047857;">0</div>
+</div>
+<div style="flex: 1 1 155px; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 9px; padding: 12px 16px;">
+<div style="font-size: 13px; color: #92400e; font-weight: bold;">Relaciones completadas</div>
+<div id="avl-completed" style="font-size: 27px; font-weight: bold; color: #92400e;">0 / 10</div>
+</div>
+</div>
+<div id="avl-question-list" style="display: grid; gap: 12px;"></div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 23px;"><button type="button" id="avl-check" style="background: #3B82F6; color: white; border: 0; border-radius: 8px; padding: 13px 20px; font-size: 16px; font-weight: bold; cursor: pointer;">Comprobar respuestas</button> <button type="button" id="avl-retry" style="background: #10B981; color: white; border: 0; border-radius: 8px; padding: 13px 20px; font-size: 16px; font-weight: bold; cursor: pointer;">Nuevo intento</button></div>
+<div id="avl-feedback" role="status" aria-live="polite" style="margin-top: 18px; padding: 18px 22px; border-radius: 8px; background: #EFF6FF; border-left: 5px solid #3B82F6;">Selecciona una definición para cada concepto y comprueba tus respuestas.</div>
+<div style="background: #1F2937; color: white; padding: 21px 25px; border-radius: 10px; margin-top: 25px;">
+<h3 style="margin: 0 0 9px; color: #fbbf24; font-size: 21px;">Recuerda</h3>
+<p style="margin: 0;">Los árboles AVL mantienen un factor de equilibrio entre −1 y +1 en cada nodo. Las rotaciones restauran el balanceo, y las operaciones de búsqueda, inserción y eliminación tienen complejidad O(log n) en el peor caso.</p>
+</div>
+</div>
+<style>
+#avl-match-game .avl-item{background:#FFFFFF;border:1px solid #E5E7EB;border-radius:9px;padding:15px 17px;}
+#avl-match-game .avl-item-grid{display:grid;grid-template-columns:minmax(175px,1fr) minmax(240px,2.3fr);gap:13px;align-items:center;}
+#avl-match-game .avl-concept{font-size:16px;font-weight:700;color:#1D4ED8;}
+#avl-match-game .avl-select{display:block;width:100%;max-width:100%;box-sizing:border-box;border:1px solid #94A3B8;border-radius:7px;background:#FFFFFF;color:#1F2937;font-family:inherit;font-size:15px;padding:11px;white-space:normal;}
+#avl-match-game .avl-select:focus{outline:3px solid #93C5FD;outline-offset:2px;}
+#avl-match-game .avl-item.avl-correct{border-color:#10B981;background:#ECFDF5;}
+#avl-match-game .avl-item.avl-incorrect{border-color:#F87171;background:#FEF2F2;}
+#avl-match-game .avl-item.avl-missing{border-color:#F59E0B;background:#FFFBEB;}
+#avl-match-game .avl-result{font-size:13px;font-weight:700;margin-top:6px;min-height:1.2em;}
+#avl-match-game button:focus-visible{outline:3px solid #FBBF24;outline-offset:3px;}
+@media(max-width:660px){#avl-match-game .avl-item-grid{grid-template-columns:1fr;}#avl-match-game .avl-select{font-size:14px;}#avl-match-game button{flex:1 1 150px;}}
+</style>
+<p>
+<script>
+(function(){
+  'use strict';
+  var root=document.getElementById('avl-match-game');
+  if(!root || root.dataset.initialized==='yes')return;
+  root.dataset.initialized='yes';
+  var pairs=[
+    {term:'Árbol balanceado',definition:'Estructura jerárquica que mantiene su altura controlada mediante reglas de equilibrio.'},
+    {term:'Árbol AVL',definition:'Árbol binario de búsqueda autoequilibrado que permite una diferencia máxima de una unidad entre las alturas de los subárboles de cada nodo.'},
+    {term:'Factor de equilibrio',definition:'Diferencia entre la altura del subárbol izquierdo y la del subárbol derecho de un nodo.'},
+    {term:'Rotación LL',definition:'Rotación simple hacia la derecha que corrige un desbalanceo izquierda-izquierda.'},
+    {term:'Rotación RR',definition:'Rotación simple hacia la izquierda que corrige un desbalanceo derecha-derecha.'},
+    {term:'Rotación LR',definition:'Rotación doble que primero gira el hijo izquierdo hacia la izquierda y después el nodo desbalanceado hacia la derecha.'},
+    {term:'Rotación RL',definition:'Rotación doble que primero gira el hijo derecho hacia la derecha y después el nodo desbalanceado hacia la izquierda.'},
+    {term:'Clase AVLTree',definition:'Clase de Python que administra la estructura y las operaciones de un árbol AVL.'},
+    {term:'Recorrido inorden',definition:'Procedimiento que visita el subárbol izquierdo, el nodo actual y el subárbol derecho, obteniendo valores ordenados.'},
+    {term:'Complejidad O(log n)',definition:'Crecimiento logarítmico del trabajo requerido, que caracteriza el peor caso de búsqueda, inserción y eliminación en un árbol AVL.'}
+  ];
+  var questions=root.querySelector('#avl-question-list');
+  var attempts=0,scoreDisplay=root.querySelector('#avl-score'),attemptDisplay=root.querySelector('#avl-attempts'),completedDisplay=root.querySelector('#avl-completed'),feedback=root.querySelector('#avl-feedback');
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function updateCompleted(){var count=questions.querySelectorAll('select').length,filled=0;questions.querySelectorAll('select').forEach(function(s){if(s.value!=='')filled++;});completedDisplay.textContent=filled+' / '+count;}
+  function build(){
+    questions.textContent='';
+    var choices=shuffle(pairs.map(function(p,i){return {id:i,text:p.definition};}));
+    pairs.forEach(function(p,i){
+      var card=document.createElement('div');card.className='avl-item';
+      var grid=document.createElement('div');grid.className='avl-item-grid';
+      var heading=document.createElement('label');heading.className='avl-concept';heading.textContent=(i+1)+'. '+p.term;heading.htmlFor='avl-answer-'+i;
+      var column=document.createElement('div');
+      var select=document.createElement('select');select.className='avl-select';select.id='avl-answer-'+i;select.dataset.correct=String(i);
+      var placeholder=document.createElement('option');placeholder.value='';placeholder.textContent='Selecciona la definición correspondiente…';select.appendChild(placeholder);
+      choices.forEach(function(choice){var opt=document.createElement('option');opt.value=String(choice.id);opt.textContent=choice.text;select.appendChild(opt);});
+      var result=document.createElement('div');result.className='avl-result';result.setAttribute('aria-live','polite');
+      select.addEventListener('change',function(){card.className='avl-item';result.textContent='';updateCompleted();});
+      column.appendChild(select);column.appendChild(result);grid.appendChild(heading);grid.appendChild(column);card.appendChild(grid);questions.appendChild(card);
+    });
+    scoreDisplay.textContent='— / 10';updateCompleted();
+    feedback.style.background='#EFF6FF';feedback.style.borderLeftColor='#3B82F6';
+    feedback.textContent='Nuevo intento preparado. Relaciona los 10 conceptos y pulsa “Comprobar respuestas”.';
+  }
+  root.querySelector('#avl-check').addEventListener('click',function(){
+    var correct=0,missing=0;
+    questions.querySelectorAll('.avl-item').forEach(function(card){
+      var select=card.querySelector('select'),result=card.querySelector('.avl-result');
+      card.className='avl-item';
+      if(select.value===''){missing++;card.classList.add('avl-missing');result.style.color='#92400E';result.textContent='Sin responder';}
+      else if(select.value===select.dataset.correct){correct++;card.classList.add('avl-correct');result.style.color='#047857';result.textContent='✓ Correcto';}
+      else{card.classList.add('avl-incorrect');result.style.color='#B91C1C';result.textContent='✗ Incorrecto. Revisa la definición e inténtalo de nuevo.';}
+    });
+    attempts++;attemptDisplay.textContent=String(attempts);scoreDisplay.textContent=correct+' / 10';
+    if(correct===10){feedback.style.background='#ECFDF5';feedback.style.borderLeftColor='#10B981';feedback.textContent='¡Excelente! Has obtenido 10/10. Todas las relaciones son correctas. Intentos utilizados: '+attempts+'.';}
+    else{feedback.style.background='#FFFBEB';feedback.style.borderLeftColor='#FBBF24';feedback.textContent='Resultado: '+correct+'/10. Respuestas incorrectas: '+(10-correct-missing)+'. Sin responder: '+missing+'. Puedes corregir las selecciones y volver a comprobar, o pulsar “Nuevo intento” para mezclar las opciones. No hay límite de intentos.';}
+  });
+  root.querySelector('#avl-retry').addEventListener('click',build);
+  build();
+})();
+</script>
+</p>
+</div>
+</div>
+</div>
+</article>
+</div></main><div class="nav-buttons">
+<a href="../html/5-aplicaciones-y-eficiencia-de-los-arboles-balance.html" title="Anterior" class="nav-button nav-button-left"><span>Anterior</span></a>
+<span class="nav-button nav-button-right" aria-hidden="true"><span>Siguiente</span></span>
+</div>
+<footer id="siteFooter"><div id="siteFooterContent"> <div id="packageLicense" class="cc cc-by-sa"> <p> <span class="license-label">Licencia: </span><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="license">Creative Commons: Reconocimiento - compartir igual 4.0</a></p>
+</div>
+</div></footer>
+</div>
+<p id="made-with-eXe"> <a href="https://exelearning.net/" target="_blank" rel="noopener"> <span>Creado con eXeLearning <span>(Ventana nueva)</span></span></a></p>
+</body>
+</html>

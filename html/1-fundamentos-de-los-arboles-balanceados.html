@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es" id="exe-page-mwcqu37d-rdmf59bhf">
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="eXeLearning v4.0.6">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="exe-pass-score" content="5">
+<link rel="license" type="text/html" href="https://creativecommons.org/licenses/by-sa/4.0/">
+<title>1. Fundamentos de los árboles balanceados | 3. Estructura Árboles Balanceados</title>
+<link rel="icon" type="image/x-icon" href="../libs/favicon.ico">
+<script>document.querySelector("html").classList.add("js");</script><script src="../libs/jquery/jquery.min.js"> </script><script src="../libs/common_i18n.js"> </script><script src="../libs/common.js"> </script><script src="../libs/exe_export.js"> </script><script src="../libs/bootstrap/bootstrap.bundle.min.js"> </script><link rel="stylesheet" href="../libs/bootstrap/bootstrap.min.css">
+<script src="../idevices/text/text.js"></script><link rel="stylesheet" href="../idevices/text/text.css">
+<link rel="stylesheet" href="../content/css/base.css"><script src="../theme/style.js"> </script><link rel="stylesheet" href="../theme/style.css">
+</head>
+<body class="exe-export exe-web-site">
+<script>document.body.className+=" js"</script>
+<div class="exe-content exe-export pre-js siteNav-hidden"><a href="#page-mwcqu37d-rdmf59bhf" id="skipNav">Skip to content</a> <nav id="siteNav">
+<ul>
+<li> <a href="../index.html" class="main-node no-ch">Inicio</a>
+</li>
+<li class="active"> <a href="../html/1-fundamentos-de-los-arboles-balanceados.html" class="active no-ch">1. Fundamentos de los árboles balanceados</a>
+</li>
+<li> <a href="../html/2-arboles-avl-y-sus-propiedades.html" class="no-ch">2. Árboles AVL y sus propiedades</a>
+</li>
+<li> <a href="../html/3-rotaciones-y-mecanismos-de-balanceo.html" class="no-ch">3. Rotaciones y mecanismos de balanceo</a>
+</li>
+<li> <a href="../html/4-implementacion-de-arboles-avl-en-python.html" class="no-ch">4. Implementación de árboles AVL en Python</a>
+</li>
+<li> <a href="../html/5-aplicaciones-y-eficiencia-de-los-arboles-balance.html" class="no-ch">5. Aplicaciones y eficiencia de los árboles balanceados</a>
+</li>
+<li> <a href="../html/repaso-estructura-arboles-balanceados.html" class="no-ch">Repaso: Estructura Árboles Balanceados</a>
+</li>
+</ul>
+</nav><main id="page-mwcqu37d-rdmf59bhf" class="page"> 
+<header class="main-header">
+<div class="package-header"><p class="package-title">3. Estructura Árboles Balanceados</p></div>
+<div class="page-header"><h1 class="page-title">1. Fundamentos de los árboles balanceados</h1></div>
+</header><div id="page-content-page-mwcqu37d-rdmf59bhf" class="page-content">
+<article id="block-mwcr476v-fijpi1o9b" class="box">
+<header class="box-head no-icon">
+<h1 class="box-title">Contenido</h1>
+<button class="box-toggle box-toggle-on" title="Toggle content">
+<span>Toggle content</span>
+</button></header>
+<div class="box-content">
+<div id="idevice-1794439784533-kq281vfx6" class="idevice_node text" data-idevice-path="../idevices/text/" data-idevice-type="text" data-idevice-component-type="json" data-idevice-json-data="{&quot;ideviceId&quot;:&quot;idevice-1794439784533-kq281vfx6&quot;}">
+<div class="exe-text-template">
+    <div style="font-family: Arial,Helvetica,sans-serif; color: #1f2937; line-height: 1.65; max-width: 1200px; margin: 0 auto;"><!-- ENCABEZADO -->
+<div style="background: #3B82F6; color: #ffffff; padding: 26px 30px; border-radius: 10px; margin-bottom: 24px;">
+<div style="display: inline-block; background: #FBBF24; color: #1f2937; padding: 5px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 12px;">Árboles balanceados · Estructura de Datos</div>
+<h2 style="margin: 0 0 10px; color: #ffffff; font-size: 29px; font-weight: 600;">Fundamentos de los árboles balanceados</h2>
+<p style="margin: 0; color: #ffffff; font-size: 17px;">Comprender las condiciones de equilibrio, la altura y el factor de balanceo, y su relación con la eficiencia de las operaciones en árboles binarios de búsqueda.</p>
+</div>
+<!-- INTRODUCCIÓN -->
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; border-left: 6px solid #10B981; padding: 20px 24px; border-radius: 8px; margin-bottom: 30px;">
+<h3 style="color: #1f2937; margin: 0 0 12px; font-size: 22px;">Introducción</h3>
+<p style="margin: 0 0 12px;">Los árboles son estructuras de datos no lineales que organizan la información jerárquicamente. Los <strong>árboles binarios de búsqueda (ABB)</strong> permiten localizar, insertar y eliminar elementos mediante relaciones de orden entre los nodos.</p>
+<p style="margin: 0 0 12px;">Sin embargo, ciertas secuencias de inserción provocan ramas demasiado largas y reducen la eficiencia de las operaciones. Los <strong>árboles balanceados</strong> utilizan reglas de equilibrio para limitar este problema.</p>
+<p style="margin: 0;">En este subtema estudiaremos el concepto de balanceo, las diferencias entre estructuras, la altura, la profundidad y el factor de equilibrio. Posteriormente, estos fundamentos permitirán comprender los árboles AVL.</p>
+</div>
+<!-- 1.1 -->
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">1.1 Concepto de árbol balanceado</h3>
+<div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-left: 6px solid #3B82F6; padding: 22px 26px; border-radius: 9px; margin-bottom: 20px;">
+<p style="margin: 0; font-size: 18px;">Un <strong>árbol balanceado</strong> mantiene su altura dentro de límites establecidos por reglas de equilibrio para evitar que el crecimiento desigual perjudique significativamente las operaciones.</p>
+</div>
+<p>El balanceo <strong>no exige</strong> que todas las ramas tengan exactamente la misma cantidad de nodos. Exige cumplir condiciones específicas que limitan su crecimiento desigual.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 14px; margin: 20px 0;">
+<div style="flex: 1 1 220px; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 18px; border-radius: 9px;"><strong style="color: #047857;">Organización</strong>
+<p style="margin: 7px 0 0;">Conserva la jerarquía y el orden de búsqueda entre los nodos.</p>
+</div>
+<div style="flex: 1 1 220px; background: #EFF6FF; border: 1px solid #BFDBFE; padding: 18px; border-radius: 9px;"><strong style="color: #1d4ed8;">Altura controlada</strong>
+<p style="margin: 7px 0 0;">Reduce el riesgo de desarrollar ramas excesivamente profundas.</p>
+</div>
+<div style="flex: 1 1 220px; background: #FFFBEB; border: 1px solid #FDE68A; padding: 18px; border-radius: 9px;"><strong style="color: #92400e;">Reorganización</strong>
+<p style="margin: 7px 0 0;">Algunos tipos utilizan rotaciones después de insertar o eliminar nodos.</p>
+</div>
+</div>
+<h4 style="color: #1d4ed8; font-size: 19px; margin: 22px 0 10px;">Ejemplo: los valores 10, 20, 30, 40 y 50</h4>
+<div style="display: flex; flex-wrap: wrap; gap: 16px;">
+<div style="flex: 1 1 290px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 9px; padding: 18px; min-width: 0;"><strong style="color: #b91c1c;">ABB sin balanceo</strong> <svg viewbox="0 0 290 225" role="img" aria-label="Árbol desbalanceado: 10, 20, 30, 40, 50 formando una cadena hacia la derecha" style="display: block; width: 100%; max-width: 290px; height: auto; margin: 8px auto;"> <g stroke="#94A3B8" stroke-width="2.5"><line x1="85" y1="25" x2="110" y2="66"></line><line x1="110" y1="66" x2="140" y2="108"></line><line x1="140" y1="108" x2="170" y2="150"></line><line x1="170" y1="150" x2="200" y2="192"></line></g> <g fill="#FEE2E2" stroke="#EF4444" stroke-width="2"><circle cx="85" cy="25" r="19"></circle><circle cx="110" cy="66" r="19"></circle><circle cx="140" cy="108" r="19"></circle><circle cx="170" cy="150" r="19"></circle><circle cx="200" cy="192" r="19"></circle></g> <g fill="#7F1D1D" font-family="Arial,sans-serif" font-size="14" font-weight="bold" text-anchor="middle"><text x="85" y="30">10</text><text x="110" y="71">20</text><text x="140" y="113">30</text><text x="170" y="155">40</text><text x="200" y="197">50</text></g> </svg>
+<p style="margin: 0; background: #FEF2F2; border-radius: 6px; padding: 12px;">Altura: <strong>4 aristas</strong>. Buscar 50 requiere visitar 5 nodos.</p>
+</div>
+<div style="flex: 1 1 290px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 9px; padding: 18px; min-width: 0;"><strong style="color: #047857;">ABB balanceado</strong> <svg viewbox="0 0 290 225" role="img" aria-label="Árbol balanceado: raíz 30, hijos 20 y 40, con hojas 10 y 50" style="display: block; width: 100%; max-width: 290px; height: auto; margin: 8px auto;"> <g stroke="#94A3B8" stroke-width="2.5"><line x1="145" y1="34" x2="75" y2="105"></line><line x1="145" y1="34" x2="215" y2="105"></line><line x1="75" y1="105" x2="40" y2="178"></line><line x1="215" y1="105" x2="250" y2="178"></line></g> <g fill="#D1FAE5" stroke="#10B981" stroke-width="2"><circle cx="145" cy="34" r="20"></circle><circle cx="75" cy="105" r="20"></circle><circle cx="215" cy="105" r="20"></circle><circle cx="40" cy="178" r="20"></circle><circle cx="250" cy="178" r="20"></circle></g> <g fill="#065F46" font-family="Arial,sans-serif" font-size="14" font-weight="bold" text-anchor="middle"><text x="145" y="39">30</text><text x="75" y="110">20</text><text x="215" y="110">40</text><text x="40" y="183">10</text><text x="250" y="183">50</text></g> </svg>
+<p style="margin: 0; background: #ECFDF5; border-radius: 6px; padding: 12px;">Altura: <strong>2 aristas</strong>. Buscar 50 requiere visitar 3 nodos.</p>
+</div>
+</div>
+<div style="background: #FFFBEB; border-left: 5px solid #FBBF24; padding: 16px 20px; border-radius: 7px; margin-top: 18px;">La diferencia muestra cómo una altura menor puede reducir la cantidad de comparaciones necesarias durante una búsqueda.</div>
+</section>
+<!-- 1.2 -->
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">1.2 Diferencias entre árboles binarios de búsqueda y árboles balanceados</h3>
+<p>Ambos conservan la propiedad de orden de un ABB: los valores menores se ubican en el subárbol izquierdo y los mayores en el derecho. En este ejemplo se consideran claves distintas; para duplicados, debe establecerse una política.</p>
+<div style="overflow-x: auto; margin: 20px 0;">
+<table style="width: 100%; border-collapse: collapse; min-width: 620px;">
+<thead>
+<tr style="background: #3B82F6; color: #ffffff;">
+<th style="padding: 13px; border: 1px solid #2563EB; text-align: left;">Característica</th>
+<th style="padding: 13px; border: 1px solid #2563EB; text-align: left;">ABB convencional</th>
+<th style="padding: 13px; border: 1px solid #2563EB; text-align: left;">ABB balanceado</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; font-weight: bold;">Organización</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">Jerárquica y ordenada</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">Jerárquica y ordenada</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; font-weight: bold;">Control de altura</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">No garantizado</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">Regulado por reglas de equilibrio</td>
+</tr>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; font-weight: bold;">Inserción</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">Mantiene el orden de búsqueda</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">Mantiene el orden y puede realizar ajustes</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; font-weight: bold;">Peor caso de búsqueda</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">O(n)</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">O(log n) en árboles AVL</td>
+</tr>
+<tr style="background: #FFFFFF;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; font-weight: bold;">Riesgo de degeneración</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">Puede formar una cadena</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">Sus reglas impiden una cadena lineal de altura n</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB; font-weight: bold;">Implementación</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">Más sencilla</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">Requiere lógica adicional</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="background: #ECFDF5; border: 1px solid #A7F3D0; padding: 20px 24px; border-radius: 9px;"><strong style="color: #047857;">Caso: inventario de productos</strong>
+<p style="margin: 8px 0 0;">Si miles de códigos se insertan de forma ascendente en un ABB convencional, la búsqueda puede requerir recorrer una gran cantidad de nodos. Un árbol AVL limita su altura, manteniendo un peor caso logarítmico.</p>
+</div>
+</section>
+<!-- 1.3 -->
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">1.3 Altura y profundidad de un árbol</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 14px; margin: 18px 0;">
+<div style="flex: 1 1 270px; background: #EFF6FF; border: 1px solid #BFDBFE; padding: 20px; border-radius: 9px;"><strong style="color: #1d4ed8;">Profundidad de un nodo</strong>
+<p style="margin: 7px 0 0;">Número de aristas desde la raíz hasta ese nodo. La raíz tiene profundidad <strong>0</strong>.</p>
+</div>
+<div style="flex: 1 1 270px; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 20px; border-radius: 9px;"><strong style="color: #047857;">Altura de un nodo</strong>
+<p style="margin: 7px 0 0;">Número de aristas en el camino descendente más largo hasta una hoja. Una hoja tiene altura <strong>0</strong>.</p>
+</div>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 9px; padding: 18px; margin: 20px 0;"><strong style="color: #1d4ed8;">Ejemplo visual</strong> <svg viewbox="0 0 460 240" role="img" aria-label="Árbol con raíz 40, hijos 20 y 60, hojas 10, 30 y 70. Profundidades 0, 1 y 2" style="display: block; width: 100%; max-width: 460px; height: auto; margin: 10px auto;"> <g stroke="#94A3B8" stroke-width="2.5"><line x1="240" y1="34" x2="160" y2="110"></line><line x1="240" y1="34" x2="320" y2="110"></line><line x1="160" y1="110" x2="105" y2="185"></line><line x1="160" y1="110" x2="215" y2="185"></line><line x1="320" y1="110" x2="375" y2="185"></line></g> <g fill="#D1FAE5" stroke="#10B981" stroke-width="2"><circle cx="160" cy="110" r="21"></circle><circle cx="320" cy="110" r="21"></circle><circle cx="105" cy="185" r="21"></circle><circle cx="215" cy="185" r="21"></circle><circle cx="375" cy="185" r="21"></circle></g><circle cx="240" cy="34" r="21" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"></circle> <g fill="#1F2937" font-family="Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle"><text x="240" y="39">40</text><text x="160" y="115">20</text><text x="320" y="115">60</text><text x="105" y="190">10</text><text x="215" y="190">30</text><text x="375" y="190">70</text></g> <g fill="#6B7280" font-family="Arial,sans-serif" font-size="12"><text x="6" y="39">Nivel 0</text><text x="6" y="115">Nivel 1</text><text x="6" y="190">Nivel 2</text></g> </svg>
+<p style="margin: 0; text-align: center;">La altura del árbol es <strong>2 aristas</strong> y su profundidad máxima también es <strong>2</strong>.</p>
+</div>
+<div style="overflow-x: auto;">
+<table style="width: 100%; border-collapse: collapse; min-width: 410px;">
+<thead>
+<tr style="background: #3B82F6; color: white;">
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Nodo</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Profundidad</th>
+<th style="padding: 12px; border: 1px solid #2563EB; text-align: left;">Altura</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="padding: 11px; border: 1px solid #D1D5DB;">40</td>
+<td style="padding: 11px; border: 1px solid #D1D5DB;">0</td>
+<td style="padding: 11px; border: 1px solid #D1D5DB;">2</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 11px; border: 1px solid #D1D5DB;">20</td>
+<td style="padding: 11px; border: 1px solid #D1D5DB;">1</td>
+<td style="padding: 11px; border: 1px solid #D1D5DB;">1</td>
+</tr>
+<tr>
+<td style="padding: 11px; border: 1px solid #D1D5DB;">60</td>
+<td style="padding: 11px; border: 1px solid #D1D5DB;">1</td>
+<td style="padding: 11px; border: 1px solid #D1D5DB;">1</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 11px; border: 1px solid #D1D5DB;">10, 30 y 70</td>
+<td style="padding: 11px; border: 1px solid #D1D5DB;">2</td>
+<td style="padding: 11px; border: 1px solid #D1D5DB;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="background: #FFFBEB; border-left: 5px solid #FBBF24; padding: 16px 20px; border-radius: 7px; margin-top: 18px;">En un ABB, el número máximo de nodos visitados en una búsqueda está limitado por la <strong>altura del árbol + 1</strong>, contando la raíz como primer nodo.</div>
+</section>
+<!-- 1.4 -->
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">1.4 Factor de equilibrio y su importancia</h3>
+<p>En los <strong>árboles AVL</strong>, el factor de equilibrio mide la diferencia entre las alturas de los subárboles izquierdo y derecho de un nodo.</p>
+<div style="background: #1F2937; color: #ffffff; padding: 22px; border-radius: 9px; text-align: center; margin: 18px 0;"><strong style="color: #fbbf24; font-size: 20px;">FE(n) = altura(izquierdo) − altura(derecho)</strong>
+<p style="color: #e5e7eb; margin: 8px 0 0;">Convención: la altura de un subárbol vacío es −1.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 14px; margin: 20px 0;">
+<div style="flex: 1 1 160px; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 17px; border-radius: 9px; text-align: center;"><strong style="display: block; color: #047857; font-size: 27px;">+1</strong><span>Izquierdo una unidad más alto</span></div>
+<div style="flex: 1 1 160px; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 17px; border-radius: 9px; text-align: center;"><strong style="display: block; color: #047857; font-size: 27px;">0</strong><span>Alturas iguales</span></div>
+<div style="flex: 1 1 160px; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 17px; border-radius: 9px; text-align: center;"><strong style="display: block; color: #047857; font-size: 27px;">−1</strong><span>Derecho una unidad más alto</span></div>
+</div>
+<p>Cuando un nodo presenta un factor superior a <strong>+1</strong> o inferior a <strong>−1</strong>, incumple la condición de equilibrio AVL. En ese caso, puede ser necesario reorganizar la estructura mediante rotaciones.</p>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; border-radius: 9px; padding: 20px; margin-top: 18px;">
+<h4 style="margin: 0 0 10px; color: #1f2937;">Ejemplo de cálculo</h4>
+<svg viewbox="0 0 310 175" role="img" aria-label="Árbol con raíz 40, hijo izquierdo 20, hijo derecho 60 e hijo izquierdo de 20 igual a 10" style="display: block; width: 100%; max-width: 310px; height: auto; margin: 4px auto 12px;"> <g stroke="#94A3B8" stroke-width="2.5"><line x1="160" y1="26" x2="90" y2="90"></line><line x1="160" y1="26" x2="235" y2="90"></line><line x1="90" y1="90" x2="48" y2="150"></line></g> <g fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"><circle cx="160" cy="26" r="20"></circle><circle cx="90" cy="90" r="20"></circle><circle cx="235" cy="90" r="20"></circle><circle cx="48" cy="150" r="20"></circle></g> <g fill="#1E40AF" font-family="Arial,sans-serif" font-size="14" font-weight="bold" text-anchor="middle"><text x="160" y="31">40</text><text x="90" y="95">20</text><text x="235" y="95">60</text><text x="48" y="155">10</text></g> </svg>
+<p style="margin: 0 0 8px;"><strong>Nodo 40:</strong> altura izquierda = 1, altura derecha = 0. Por tanto, <code>FE(40) = 1 − 0 = +1</code>.</p>
+<p style="margin: 0;"><strong>Nodo 20:</strong> altura izquierda = 0, altura derecha = −1. Por tanto, <code>FE(20) = 0 − (−1) = +1</code>.</p>
+</div>
+<div style="background: #EFF6FF; border-left: 5px solid #3B82F6; padding: 16px 20px; border-radius: 7px; margin-top: 18px;">En un árbol AVL se comprueba el factor de equilibrio de <strong>cada nodo</strong>, no solamente el de la raíz.</div>
+</section>
+<!-- 1.5 -->
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">1.5 Ventajas del balanceo en la eficiencia de las operaciones</h3>
+<p>La altura de un árbol influye directamente en el trabajo necesario para localizar, insertar y eliminar elementos. Un árbol AVL conserva una altura <strong>O(log n)</strong> y proporciona garantías eficientes incluso en el peor caso.</p>
+<div style="overflow-x: auto; margin: 18px 0;">
+<table style="width: 100%; border-collapse: collapse; min-width: 530px;">
+<thead>
+<tr style="background: #3B82F6; color: #ffffff;">
+<th style="padding: 13px; border: 1px solid #2563EB; text-align: left;">Operación</th>
+<th style="padding: 13px; border: 1px solid #2563EB; text-align: left;">ABB convencional (peor caso)</th>
+<th style="padding: 13px; border: 1px solid #2563EB; text-align: left;">AVL (peor caso)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">Búsqueda</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">O(n)</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">O(log n)</td>
+</tr>
+<tr style="background: #F9F9FB;">
+<td style="padding: 12px; border: 1px solid #D1D5DB;">Inserción</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">O(n)</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">O(log n)</td>
+</tr>
+<tr>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">Eliminación</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">O(n)</td>
+<td style="padding: 12px; border: 1px solid #D1D5DB;">O(log n)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>La notación <code>O(n)</code> representa crecimiento lineal respecto a la cantidad de nodos. En cambio, <code>O(log n)</code> representa un crecimiento mucho más moderado conforme aumenta el conjunto de datos.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 20px;">
+<div style="flex: 1 1 230px; background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 18px;"><strong style="color: #1d4ed8;">Búsquedas previsibles</strong>
+<p style="margin: 8px 0 0;">Evita que una inserción ordenada convierta las búsquedas en recorridos lineales.</p>
+</div>
+<div style="flex: 1 1 230px; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 8px; padding: 18px;"><strong style="color: #047857;">Crecimiento controlado</strong>
+<p style="margin: 8px 0 0;">Mantiene una altura acotada aun cuando aumenta la cantidad de nodos.</p>
+</div>
+<div style="flex: 1 1 230px; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 18px;"><strong style="color: #92400e;">Datos dinámicos</strong>
+<p style="margin: 8px 0 0;">Admite inserciones y eliminaciones respetando sus condiciones de equilibrio.</p>
+</div>
+</div>
+<div style="background: #F9F9FB; border: 1px solid #E5E7EB; border-radius: 9px; padding: 18px 22px; margin-top: 20px;"><strong>Consideración técnica</strong>
+<p style="margin: 8px 0 0;">El balanceo tiene un costo: las implementaciones AVL mantienen información adicional de altura o equilibrio y pueden necesitar rotaciones. Por ello, deben seleccionarse según los requisitos del programa.</p>
+</div>
+</section>
+<!-- PYTHON -->
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">Ejemplo introductorio en Python</h3>
+<p>Este ejemplo implementa un <strong>ABB convencional sin balanceo</strong>. Se insertan cinco valores en orden ascendente para observar su efecto en la altura.</p>
+<pre style="background: #1F2937; color: #f9fafb; font-family: Consolas,Monaco,monospace; border-radius: 9px; font-size: 14px; line-height: 1.6; margin: 20px 0; overflow: auto; padding: 22px;"><code>class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+
+def insert(root, value):
+    if root is None:
+        return Node(value)
+
+    if value &lt; root.value:
+        root.left = insert(root.left, value)
+    elif value &gt; root.value:
+        root.right = insert(root.right, value)
+
+    return root
+
+
+def height(root):
+    if root is None:
+        return -1
+
+    return 1 + max(
+        height(root.left),
+        height(root.right)
+    )
+
+
+root = None
+
+for value in [10, 20, 30, 40, 50]:
+    root = insert(root, value)
+
+print(&quot;Altura del árbol:&quot;, height(root))</code></pre>
+<div style="background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 9px; padding: 18px 22px;"><strong style="color: #047857;">Resultado esperado</strong>
+<pre style="margin: 10px 0 0; background: #FFFFFF; color: #1f2937; padding: 12px; border-radius: 6px; overflow: auto;"><code>Altura del árbol: 4</code></pre>
+</div>
+<h4 style="font-size: 19px; color: #1f2937; margin: 22px 0 10px;">Análisis del ejemplo</h4>
+<ul style="padding-left: 24px; margin: 0;">
+<li style="margin-bottom: 8px;"><code>Node</code> representa un nodo y las referencias a sus hijos.</li>
+<li style="margin-bottom: 8px;"><code>insert()</code> agrega valores siguiendo el orden del ABB; los duplicados se omiten.</li>
+<li style="margin-bottom: 8px;"><code>height()</code> calcula la altura recursivamente y asigna −1 a los subárboles vacíos.</li>
+<li>Al insertar valores ascendentes, todos quedan a la derecha: por ello el árbol alcanza una altura de 4 aristas.</li>
+</ul>
+<div style="background: #FFFBEB; border: 1px solid #FDE68A; border-left: 5px solid #FBBF24; padding: 17px 20px; border-radius: 8px; margin-top: 20px;"><strong>Importante:</strong> este código aún no implementa un árbol AVL. Su función es demostrar el problema que resolveremos mediante los mecanismos de balanceo.</div>
+</section>
+<!-- ACTIVIDAD -->
+<section style="margin-bottom: 34px;">
+<h3 style="color: #1f2937; font-size: 24px; border-bottom: 3px solid #3B82F6; padding-bottom: 9px; margin-bottom: 20px;">Actividad de análisis</h3>
+<div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 9px; padding: 22px 24px;">
+<p style="margin: 0 0 12px;">Un sistema de inventario almacena los códigos <strong>15, 25, 35, 45, 55 y 65</strong> en un ABB convencional, insertándolos en el orden indicado.</p>
+<ol style="margin: 0; padding-left: 24px;">
+<li style="margin-bottom: 8px;">¿Qué forma tendrá el árbol después de todas las inserciones?</li>
+<li style="margin-bottom: 8px;">¿Cuál es su altura si se cuentan aristas?</li>
+<li style="margin-bottom: 8px;">¿Cuántos nodos deben visitarse para localizar el código 65?</li>
+<li style="margin-bottom: 8px;">¿Por qué esta organización puede resultar ineficiente cuando crece el inventario?</li>
+<li>¿Qué beneficio aportaría utilizar un árbol AVL?</li>
+</ol>
+</div>
+<p style="margin: 12px 0 0; color: #4b5563;">Propósito: relacionar la forma del árbol, la altura y la eficiencia de las búsquedas antes de implementar rotaciones.</p>
+</section>
+<!-- SÍNTESIS -->
+<div style="background: #1F2937; color: #ffffff; padding: 26px 30px; border-radius: 10px; margin-top: 30px;">
+<h3 style="margin: 0 0 12px; color: #fbbf24; font-size: 22px;">Síntesis</h3>
+<p style="margin: 0 0 10px;">Los árboles balanceados mantienen una altura controlada mediante reglas específicas, reduciendo el riesgo de un crecimiento excesivamente desigual.</p>
+<p style="margin: 0 0 10px;">La <strong>profundidad</strong> se mide desde la raíz hasta un nodo; la <strong>altura</strong>, desde un nodo hasta su hoja descendiente más lejana.</p>
+<p style="margin: 0 0 10px;">En los árboles AVL, el <strong>factor de equilibrio</strong> compara las alturas de los subárboles izquierdo y derecho. Los valores válidos para cada nodo son −1, 0 y +1.</p>
+<p style="margin: 0;">Estos conceptos constituyen la base para el siguiente subtema: <strong>Árboles AVL y sus propiedades</strong>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</div></main><div class="nav-buttons">
+<a href="../index.html" title="Anterior" class="nav-button nav-button-left"><span>Anterior</span></a>
+<a href="../html/2-arboles-avl-y-sus-propiedades.html" title="Siguiente" class="nav-button nav-button-right"><span>Siguiente</span></a>
+</div>
+<footer id="siteFooter"><div id="siteFooterContent"> <div id="packageLicense" class="cc cc-by-sa"> <p> <span class="license-label">Licencia: </span><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="license">Creative Commons: Reconocimiento - compartir igual 4.0</a></p>
+</div>
+</div></footer>
+</div>
+<p id="made-with-eXe"> <a href="https://exelearning.net/" target="_blank" rel="noopener"> <span>Creado con eXeLearning <span>(Ventana nueva)</span></span></a></p>
+</body>
+</html>
